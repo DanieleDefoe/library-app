@@ -65,7 +65,7 @@
 }
 
 .card__pages::after {
-  content: " pages";
+  content: ' pages';
 }
 
 .card__remove {
