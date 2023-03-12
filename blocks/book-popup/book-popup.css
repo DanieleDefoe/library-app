@@ -23,13 +23,15 @@
 .book-form {
   position: fixed;
   background-color: #fff;
+  top: 50vh;
+  left: 50%;
+  transform: translate(-50%, -50%);
   gap: 25px;
   padding: 30px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
-  position: relative;
   width: clamp(300px, 30vw, 500px);
 }
 
