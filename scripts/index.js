@@ -54,10 +54,9 @@ const returnFormData = (title, author, pages, isRead) => {
   bookAuthorEdit.value = author;
   bookPagesEdit.value = pages;
   if (!isRead) {
-    bookIsReadEdit.removeAttribute('checked');
+    bookIsReadEdit.checked = false
   } else {
-    bookIsReadEdit.setAttribute('checked', true);
-    console.log('hekko');
+    bookIsReadEdit.checked = true
   }
   openPopup(editBookPopup);
 };
