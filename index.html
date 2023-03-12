@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Simple library app build using JavaScript OOP principles learned in The Odin Project Curriculum"
+    />
+    <meta
+      name="keywords"
+      content="library app, the odin project, javascript OOP, local storage"
+    />
+    <meta name="author" content="Abuzar Mamedov" />
+    <title>Library App</title>
+    <link rel="stylesheet" href="./pages/index.css" />
+    <link rel="shortcut icon" href="./images/favicon.svg" type="image/x-icon" />
+    <script src="./scripts/index.js" defer></script>
+  </head>
+  <body class="page">
+    <div class="wrapper">
+      <header class="header">
+        <div class="header__logo-container">
+          <img
+            src="./images/header__log.svg"
+            alt="book icon"
+            class="header__logo"
+          />
+          <h1 class="header__title">your personal library</h1>
+        </div>
+        <button class="header__add-button">
+          <img
+            src="./images/header__add-icon.svg"
+            alt="add"
+            class="header__add-button-logo"
+          />
+          <p class="header__add-button-title">add new book</p>
+        </button>
+      </header>
+      <main class="main">
+        <section class="book-cards"></section>
+      </main>
+    </div>
+    <section class="book-popup" id="book-add">
+      <form class="book-form" id="book-form" name="book-form">
+        <h2 class="book-form__title">add new book</h2>
+        <fieldset class="book-form__inputs">
+          <input
+            type="text"
+            class="book-form__input"
+            id="book-title"
+            name="book-title"
+            placeholder="title"
+            required
+          />
+          <input
+            type="text"
+            class="book-form__input"
+            id="book-author"
+            name="book-author"
+            placeholder="author"
+            required
+          />
+          <input
+            type="text"
+            inputmode="numeric"
+            class="book-form__input"
+            id="book-total-pages"
+            name="book-total-pages"
+            placeholder="total pages"
+            pattern="\d+"
+            required
+          />
+          <label for="is-finished" class="book-form__checkbox-label">
+            have you read it?
+            <input
+              type="checkbox"
+              id="is-finished"
+              name="finished"
+              class="book-form__checkbox"
+            />
+          </label>
+        </fieldset>
+        <button type="button" class="book-form__exit"></button>
+        <button type="submit" class="book-form__submit">add</button>
+      </form>
+    </section>
+    <section class="book-popup" id="book-edit">
+      <form class="book-form" id="book-form-edit" name="book-form-edit">
+        <h2 class="book-form__title">edit book</h2>
+        <fieldset class="book-form__inputs">
+          <input
+            type="text"
+            class="book-form__input"
+            id="book-title-edit"
+            name="book-title-edit"
+            placeholder="title"
+            required
+          />
+          <input
+            type="text"
+            class="book-form__input"
+            id="book-author-edit"
+            name="book-author-edit"
+            placeholder="author"
+            required
+          />
+          <input
+            type="text"
+            inputmode="numeric"
+            class="book-form__input"
+            id="book-total-pages-edit"
+            name="book-total-pages-edit"
+            placeholder="total pages"
+            pattern="\d+"
+            required
+          />
+          <label for="is-finished" class="book-form__checkbox-label">
+            have you read it?
+            <input
+              type="checkbox"
+              id="is-finished-edit"
+              name="finished"
+              class="book-form__checkbox"
+            />
+          </label>
+        </fieldset>
+        <button type="button" class="book-form__exit"></button>
+        <button type="submit" class="book-form__submit">edit</button>
+      </form>
+    </section>
+    <template id="card-template">
+      <article class="card">
+        <h2 class="card__title"></h2>
+        <p class="card__author"></p>
+        <p class="card__pages"></p>
+        <button class="card__remove" type="button">remove</button>
+      </article>
+    </template>
+  </body>
+</html>

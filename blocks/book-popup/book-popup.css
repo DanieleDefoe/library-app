@@ -1,0 +1,138 @@
+.book-popup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.book-popup_active {
+  visibility: unset;
+  opacity: 1;
+}
+
+.book-form {
+  position: fixed;
+  background-color: #fff;
+  gap: 25px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 0 rgba(255, 255, 255, 0.5);
+  position: relative;
+  width: clamp(300px, 30vw, 500px);
+}
+
+.book-form:invalid .book-form__submit {
+  background: grey;
+  cursor: unset;
+  box-shadow: unset;
+}
+
+.book-form__title {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 30px;
+  text-align: center;
+}
+
+.book-form__inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+.book-form__input {
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.5;
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.book-form__input::placeholder {
+  text-transform: capitalize;
+}
+
+.book-form__input:focus {
+  outline: 2px solid blue;
+  border-radius: 5px;
+}
+
+.book-form__submit {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 25px;
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  background-image: linear-gradient(90deg, #6441a5, #2a0845);
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.book-form__submit:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+}
+
+.book-form__exit {
+  background: url(../../images/form__exit.svg) center / contain;
+  top: 0;
+  left: 100%;
+  transform: translateY(-100%);
+  position: absolute;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.book-form__exit:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.book-form__checkbox-label {
+  width: max-content;
+  padding: 5px;
+  font-size: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.book-form__checkbox {
+  width: 15px;
+  height: 15px;
+}
+
+.book-form__checkbox-label:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 425px) {
+  .book-form {
+    padding: 20px;
+  }
+  .book-form__exit {
+    transform: translate(-100%, -120%);
+  }
+}
