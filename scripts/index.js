@@ -132,5 +132,7 @@ bookForm.addEventListener('submit', prependCard)
 bookFormEdit.addEventListener('submit', editCard)
 
 Object.keys(localStorage).forEach((key) => {
-  bookGrid.insertAdjacentHTML('afterbegin', key)
+  if (key.includes('<article class="card')) {
+    bookGrid.insertAdjacentHTML('afterbegin', key)
+  }
 })
