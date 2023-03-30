@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 class BookCard {
   constructor(title, author, pages, isRead) {
     this.title = title
@@ -27,26 +28,17 @@ const bookAuthorEdit = bookFormEdit.querySelector('#book-author-edit')
 const bookPagesEdit = bookFormEdit.querySelector('#book-total-pages-edit')
 const bookIsReadEdit = bookFormEdit.querySelector('#is-finished-edit')
 
-const cardTemplate = document.getElementById('card-template').content
+const cardTemplate = document.getElementById('card-template').content.querySelector('.card')
+
+let currentClickedArticle
+
+const closePopupByEscape = (e) => {
+  if (e.key === 'Escape') closePopup()
+}
 
 const openPopup = (popup) => {
   popup.classList.add('book-popup_active')
-}
-
-const closePopup = () => {
-  document
-    .querySelector('.book-popup_active')
-    .classList.remove('book-popup_active')
-}
-
-const closePopupOnOverlayClick = (e) => {
-  if (e.target !== e.currentTarget) return
-  closePopup()
-}
-
-const removeCard = (e) => {
-  e.stopPropagation()
-  e.target.closest('.card').remove()
+  window.addEventListener('keyup', closePopupByEscape)
 }
 
 const returnFormData = (title, author, pages, isRead) => {
@@ -61,7 +53,35 @@ const returnFormData = (title, author, pages, isRead) => {
   openPopup(editBookPopup)
 }
 
-let currentClickedArticle
+// EVENT DELEGATION IN ACTION!
+bookGrid.addEventListener('click', (e) => {
+  let targetNode = e.target
+  if (targetNode.classList.contains('card__remove')) {
+    targetNode.closest('.card').remove()
+    localStorage.removeItem(targetNode.parentElement.outerHTML)
+  } else if (targetNode.classList.contains('card') || targetNode.parentElement.classList.contains('card')) {
+    if (targetNode.parentElement.classList.contains('card')) targetNode = targetNode.parentElement
+    currentClickedArticle = targetNode
+    returnFormData(
+      currentClickedArticle.children[0].textContent,
+      currentClickedArticle.children[1].textContent,
+      currentClickedArticle.children[2].textContent,
+      targetNode.classList.contains('card_read'),
+    )
+  }
+})
+
+const closePopup = () => {
+  document
+    .querySelector('.book-popup_active')
+    .classList.remove('book-popup_active')
+  window.removeEventListener('keyup', closePopupByEscape)
+}
+
+const closePopupOnOverlayClick = (e) => {
+  if (e.target !== e.currentTarget) return
+  closePopup()
+}
 
 const createCard = () => {
   const article = cardTemplate.cloneNode(true)
@@ -74,18 +94,7 @@ const createCard = () => {
   article.querySelector('.card__title').textContent = book.title
   article.querySelector('.card__author').textContent = book.author
   article.querySelector('.card__pages').textContent = book.pages
-  article.querySelector('.card__remove').addEventListener('click', removeCard)
-  const articleNode = article.querySelector('.card')
-  articleNode.addEventListener('click', () => {
-    currentClickedArticle = articleNode
-    returnFormData(
-      currentClickedArticle.children[0].textContent,
-      currentClickedArticle.children[1].textContent,
-      currentClickedArticle.children[2].textContent,
-      articleNode.classList.contains('card_read'),
-    )
-  })
-  if (book.isRead) articleNode.classList.add('card_read')
+  if (book.isRead) article.classList.add('card_read')
   return article
 }
 
@@ -93,12 +102,14 @@ const prependCard = (e) => {
   e.preventDefault()
   const article = createCard()
   bookGrid.prepend(article)
+  localStorage.setItem(article.outerHTML, article.outerHTML)
   closePopup()
   bookForm.reset()
 }
 
 const editCard = (e) => {
   e.preventDefault()
+  localStorage.removeItem(currentClickedArticle.outerHTML)
   currentClickedArticle.querySelector('.card__title').textContent = bookTitleEdit.value
   currentClickedArticle.querySelector('.card__author').textContent = bookAuthorEdit.value
   currentClickedArticle.querySelector('.card__pages').textContent = bookPagesEdit.value
@@ -107,6 +118,7 @@ const editCard = (e) => {
   } else {
     currentClickedArticle.classList.remove('card_read')
   }
+  localStorage.setItem(currentClickedArticle.outerHTML, currentClickedArticle.outerHTML)
   closePopup()
 }
 
@@ -118,3 +130,7 @@ exitPopupBtns.forEach((exit) => exit.addEventListener('click', closePopup))
 
 bookForm.addEventListener('submit', prependCard)
 bookFormEdit.addEventListener('submit', editCard)
+
+Object.keys(localStorage).forEach((key) => {
+  bookGrid.insertAdjacentHTML('afterbegin', key)
+})
